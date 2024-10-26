@@ -10,7 +10,11 @@ The objective is to create a series of tasks using Clean Architecture with TypeS
    ```
    docker compose up -d
    ```
-5. Run ```npm run dev```
+5. Run 
+   ```
+   npx prisma migrate dev
+   ```
+6. Run ```npm run dev```
 
 ## Get Gmail Key
 [Google AppPasswords](https://myaccount.google.com/u/0/apppasswords)

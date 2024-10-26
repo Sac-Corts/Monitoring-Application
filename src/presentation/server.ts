@@ -1,13 +1,13 @@
 import { CronService } from "./cron/cron-service";
 import { EmailService } from "./email/email.service";
 import { LogRepositoryImpl } from "../infrastructure/repositories/log.repository.impl";
-import { FileSystemDataSource } from "../infrastructure/datasources/file-system.datasource";
+import { FileSystemDatasource } from "../infrastructure/datasources/file-system.datasource";
 import { MongoLogDatasource } from "../infrastructure/datasources/mongo-log.datasource";
 import { PostgresLogDatasource } from "../infrastructure/datasources/postgres-log.datasource";
 import { CheckServiceMultiple } from "../domain/use-cases/checks/check-service-multiple";
 
 const fsLogRepository = new LogRepositoryImpl(
-    new FileSystemDataSource(),
+    new FileSystemDatasource(),
 )
 const mongoLogRepository = new LogRepositoryImpl(
     new MongoLogDatasource(),
@@ -38,17 +38,17 @@ export class Server {
         // const logs = await logRepository.getLogs(LogSeverityLevel.low);
         // console.log('logs', logs);
 
-        CronService.createJob(
-            '*/10 * * * * *',
-            () => {
-                const url = 'http://google.com';
-                new CheckServiceMultiple(
-                    [fsLogRepository, mongoLogRepository, postgresLogRepository],
-                    () => console.log(`Service ${url} is ok`),
+        // CronService.createJob(
+        //     '*/10 * * * * *',
+        //     () => {
+        //         const url = 'http://google.com';
+        //         new CheckServiceMultiple(
+        //             [fsLogRepository, mongoLogRepository, postgresLogRepository],
+        //             () => console.log(`Service ${url} is ok`),
 
-                    (error) => console.error(error)
-                ).execute(url);
-            }
-        );
+        //             (error) => console.error(error)
+        //         ).execute(url);
+        //     }
+        // );
     }
 }
